@@ -1,4 +1,4 @@
-package com.scanner.temp_app
+package com.scanner.audio_graffiti
 
 import org.junit.Test
 

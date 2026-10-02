@@ -1,4 +1,4 @@
-package com.scanner.temp_app.ui.theme
+package com.scanner.audio_graffiti.ui.theme
 
 import android.app.Activity
 import android.os.Build

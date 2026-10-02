@@ -1,16 +1,19 @@
 plugins {
+    // Add the Google services Gradle plugin
+    id("com.google.gms.google-services")
+
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
 }
 
 android {
-    namespace = "com.scanner.temp_app"
+    namespace = "com.scanner.audio_graffiti"
     compileSdk {
         version = release(37)
     }
 
     defaultConfig {
-        applicationId = "com.scanner.temp_app"
+        applicationId = "com.scanner.audio_graffiti"
         minSdk = 24
         targetSdk = 37
         versionCode = 1
@@ -36,6 +39,19 @@ android {
 }
 
 dependencies {
+    // Import the Firebase BoM (Bill of Materials) to manage version compatibility
+    implementation(platform("com.google.firebase:firebase-bom:33.1.2"))
+
+    // Firebase Authentication
+    implementation("com.google.firebase:firebase-auth")
+
+    // Cloud Firestore (Database for pins & reports)
+    implementation("com.google.firebase:firebase-firestore")
+
+    // Cloud Storage (Storage for voice memo audio files)
+    implementation("com.google.firebase:firebase-storage")
+
+    // AndroidX & Compose dependencies
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.compose.material3)
@@ -44,11 +60,14 @@ dependencies {
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
+
     testImplementation(libs.junit)
+
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(libs.androidx.junit)
+
     debugImplementation(libs.androidx.compose.ui.test.manifest)
     debugImplementation(libs.androidx.compose.ui.tooling)
 }

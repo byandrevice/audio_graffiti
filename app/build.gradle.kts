@@ -35,6 +35,7 @@ android {
 dependencies {
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.analytics)
+    implementation(libs.firebase.firestore)
 
     implementation(libs.room.runtime)
     annotationProcessor(libs.room.compiler)

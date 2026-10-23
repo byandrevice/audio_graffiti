@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical"
+    android:background="@color/campus_background" android:padding="24dp">
+    <TextView android:id="@+id/recorder_title" android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:text="@string/campus_recording" android:gravity="center" android:textSize="24sp" android:textStyle="bold"
+        android:textColor="@color/campus_recording_red" android:accessibilityHeading="true" android:accessibilityLiveRegion="polite" />
+    <TextView android:id="@+id/recorder_clock" android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:text="00:00" android:gravity="center" android:layout_marginTop="10dp" android:fontFeatureSettings="tnum"
+        android:textColor="@color/campus_foreground" android:textSize="32sp" />
+    <com.scanner.audio_graffiti.ui.RecordingWaveformView android:id="@+id/recorder_waveform"
+        android:layout_width="match_parent" android:layout_height="110dp" android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp" android:contentDescription="@string/campus_live_waveform" />
+    <TextView android:id="@+id/recorder_message" android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:gravity="center" android:textSize="13sp" android:textColor="@color/campus_muted" android:visibility="gone" />
+    <com.google.android.material.button.MaterialButton android:id="@+id/recorder_play" android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:minHeight="52dp" android:text="@string/campus_play" android:visibility="gone"
+        android:backgroundTint="@color/campus_surface" android:textColor="@color/campus_foreground" app:cornerRadius="12dp" />
+    <com.google.android.material.button.MaterialButton android:id="@+id/recorder_stop" android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:layout_marginTop="24dp" android:minHeight="52dp"
+        android:backgroundTint="@color/campus_recording_red" android:text="@string/campus_stop" android:textColor="@color/white"
+        android:textStyle="bold" app:cornerRadius="12dp" />
+</LinearLayout>

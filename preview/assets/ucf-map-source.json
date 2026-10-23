@@ -1,0 +1,13 @@
+{
+  "title": "Simplified UCF campus street map",
+  "publisher": "OpenStreetMap contributors; local styling by Audio Graffiti",
+  "sourcePage": "https://www.openstreetmap.org/copyright",
+  "sourceData": "https://api.openstreetmap.org/api/0.6/map?bbox=-81.205,28.5955,-81.196,28.608",
+  "license": "https://opendatacommons.org/licenses/odbl/1-0/",
+  "retrieved": "2026-10-20",
+  "render": {"west": -81.205, "south": 28.5955, "east": -81.196, "north": 28.608, "width": 1290, "height": 2064, "latitudeProjection": "Web Mercator"},
+  "attribution": "© OpenStreetMap contributors",
+  "generator": "preview/build_campus_map.py",
+  "geometry": "preview/assets/ucf-map-data.geojson",
+  "notes": "Real road, path, building, greenery, and water geometry, rendered locally without parking/POI symbols. No runtime map requests. Voice drops and the blue user location are sample overlays; no GPS connection. The superseded official-map raster and Figma wireframe remain as reference assets only."
+}

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Semantic roles shared by the campus map controls, derived from Login. -->
+    <color name="campus_background">#FFFCFE</color>
+    <color name="campus_foreground">#090707</color>
+    <color name="campus_muted">#625E66</color>
+    <color name="campus_primary">#FDC804</color>
+    <color name="campus_surface">#FCF5FD</color>
+    <color name="campus_border">#D4CED7</color>
+    <dimen name="campus_gutter">20dp</dimen>
+    <dimen name="campus_control_radius">12dp</dimen>
+    <dimen name="campus_touch_target">48dp</dimen>
+    <string name="campus_brand">AUDIO GRAFFITI</string>
+    <string name="campus_title">Campus Map</string>
+    <string name="campus_subtitle">Hear what campus is saying nearby.</string>
+    <string name="campus_map_description">University of Central Florida main campus map</string>
+    <string name="campus_map_attribution">© OpenStreetMap contributors</string>
+    <string name="campus_user_location">Your location (preview position)</string>
+    <string name="campus_record">RECORD A DROP</string>
+    <string name="campus_student_union">Student Union</string>
+    <string name="campus_library">John C. Hitt Library</string>
+    <string name="campus_memory_mall">Memory Mall</string>
+    <string name="campus_drop_label">Voice drop %1$d</string>
+    <string name="campus_drop_description">Visit this spot on campus to hear what someone left behind.</string>
+    <string name="campus_close">Back to map</string>
+    <color name="campus_recording_red">#CC293A</color>
+    <string name="campus_recording">Recording</string>
+    <string name="campus_recorded">Recorded</string>
+    <string name="campus_stop">■  STOP</string>
+    <string name="campus_done">Done</string>
+    <string name="campus_play">Play recording</string>
+    <string name="campus_pause">Pause</string>
+    <string name="campus_recording_saved">Saved on this device.</string>
+    <string name="campus_recording_error">Could not record audio. Check your microphone and try again.</string>
+    <string name="campus_recording_short">Recording was too short. Try again.</string>
+    <string name="campus_microphone_permission">Microphone access is needed to record a voice drop.</string>
+    <string name="campus_live_waveform">Live microphone waveform</string>
+    <string name="campus_preview_audio_notice">Voice-drop playback and live location are not connected yet.</string>
+</resources>

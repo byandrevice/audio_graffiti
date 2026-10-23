@@ -6,4 +6,81 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"/>
+    android:background="@color/campus_background"
+    android:paddingStart="@dimen/campus_gutter"
+    android:paddingEnd="@dimen/campus_gutter"
+    tools:context=".CampusMapActivity">
+
+    <LinearLayout
+        android:id="@+id/campus_header"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="52dp"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+        <TextView
+            android:id="@+id/campus_brand"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/campus_brand"
+            android:textColor="@color/campus_foreground"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+        <TextView
+            android:id="@+id/campus_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:accessibilityHeading="true"
+            android:text="@string/campus_title"
+            android:textColor="@color/campus_foreground"
+            android:textSize="34sp"
+            android:textStyle="bold" />
+        <TextView
+            android:id="@+id/campus_subtitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/campus_subtitle"
+            android:textColor="@color/campus_muted"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <!-- Local crop of UCF's official campus map; live maps/GPS can replace it later. -->
+    <com.scanner.audio_graffiti.ui.CampusMapPanel
+        android:id="@+id/campus_map"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/campus_header"
+        app:layout_constraintBottom_toTopOf="@id/campus_footer" />
+
+    <LinearLayout
+        android:id="@+id/campus_footer"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/campus_record"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="52dp"
+            android:backgroundTint="@color/campus_primary"
+            android:text="@string/campus_record"
+            android:textColor="@color/campus_foreground"
+            android:textStyle="bold"
+            app:cornerRadius="@dimen/campus_control_radius"
+            app:icon="@drawable/ic_campus_mic"
+            app:iconGravity="textStart"
+            app:iconTint="@color/campus_foreground" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

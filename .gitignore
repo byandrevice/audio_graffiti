@@ -11,3 +11,12 @@
 .externalNativeBuild
 .cxx
 local.properties
+
+# Local documentation and working context
+[Rr][Ee][Aa][Dd][Mm][Ee]*
+PROJECT_CONTEXT.md
+
+# Browser-preview files (not part of the native Android app)
+*.css
+*.js
+*.html

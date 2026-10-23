@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFFFFF"
     android:fillViewport="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -11,23 +12,52 @@
         android:layout_height="wrap_content"
         android:padding="20dp">
 
+        <!-- App Branding -->
         <TextView
             android:id="@+id/appName_textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="24dp"
             android:text="AUDIO GRAFFITI"
+            android:textColor="#121212"
+            android:textSize="14sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <!-- Exit / Close Button (go_back.png) -->
+        <ImageView
+            android:id="@+id/exit_button"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:contentDescription="Exit"
+            android:src="@drawable/go_back"
+            app:layout_constraintBottom_toBottomOf="@+id/appName_textView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/appName_textView" />
+
+        <!-- Page Header -->
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="Create your account"
+            android:textColor="#121212"
+            android:textSize="32sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/appName_textView" />
+
+        <!-- UCF Email Section -->
         <TextView
             android:id="@+id/userName_textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="24dp"
             android:text="UCF email"
-            android:textSize="16sp"
+            android:textColor="#121212"
+            android:textSize="15sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView4" />
@@ -36,7 +66,7 @@
             android:id="@+id/emailInputLayout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="6dp"
             app:boxCornerRadiusBottomEnd="12dp"
             app:boxCornerRadiusBottomStart="12dp"
             app:boxCornerRadiusTopEnd="12dp"
@@ -53,62 +83,58 @@
                 android:inputType="textEmailAddress" />
         </com.google.android.material.textfield.TextInputLayout>
 
+        <!-- Display Name Section -->
         <TextView
             android:id="@+id/displayName_textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="Display Name"
-            android:textSize="16sp"
+            android:layout_marginTop="16dp"
+            android:text="Display name"
+            android:textColor="#121212"
+            android:textSize="15sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/emailInputLayout" />
-
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/displayNameInputLayout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="112dp"
+            android:layout_marginTop="6dp"
             app:boxCornerRadiusBottomEnd="12dp"
             app:boxCornerRadiusBottomStart="12dp"
             app:boxCornerRadiusTopEnd="12dp"
             app:boxCornerRadiusTopStart="12dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/userName_textView">
+            app:layout_constraintTop_toBottomOf="@+id/displayName_textView">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/display_hint"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_marginTop="24dp"
                 android:hint="How others will see you"
-                android:inputType="textPersonName"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/displayName_textView" />
-
+                android:inputType="textPersonName" />
         </com.google.android.material.textfield.TextInputLayout>
 
+        <!-- Password Section -->
         <TextView
             android:id="@+id/password_textView1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="16dp"
             android:text="Password"
-            android:textSize="17sp"
+            android:textColor="#121212"
+            android:textSize="15sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/confirmPasswordInputLayout" />
+            app:layout_constraintTop_toBottomOf="@+id/displayNameInputLayout" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/passwordInputLayout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="6dp"
             app:boxCornerRadiusBottomEnd="12dp"
             app:boxCornerRadiusBottomStart="12dp"
             app:boxCornerRadiusTopEnd="12dp"
@@ -122,27 +148,28 @@
                 android:id="@+id/pass_hint"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
+                android:hint="At least 8 characters"
                 android:inputType="textPassword" />
-
         </com.google.android.material.textfield.TextInputLayout>
 
+        <!-- Confirm Password Section -->
         <TextView
             android:id="@+id/password_textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="Confirm Password"
-            android:textSize="17sp"
+            android:layout_marginTop="16dp"
+            android:text="Confirm password"
+            android:textColor="#121212"
+            android:textSize="15sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/displayNameInputLayout" />
+            app:layout_constraintTop_toBottomOf="@+id/passwordInputLayout" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/confirmPasswordInputLayout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:hint="At least 8 characters"
+            android:layout_marginTop="6dp"
             app:boxCornerRadiusBottomEnd="12dp"
             app:boxCornerRadiusBottomStart="12dp"
             app:boxCornerRadiusTopEnd="12dp"
@@ -157,14 +184,26 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:inputType="textPassword" />
-
         </com.google.android.material.textfield.TextInputLayout>
 
+        <!-- Terms Agreement Checkbox -->
+        <CheckBox
+            android:id="@+id/terms_checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="I agree to the community guidelines"
+            android:textColor="#757575"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/confirmPasswordInputLayout" />
+
+        <!-- Create Account Button -->
         <Button
             android:id="@+id/createAccountButton"
             android:layout_width="0dp"
             android:layout_height="52dp"
-            android:layout_marginTop="28dp"
+            android:layout_marginTop="20dp"
             android:backgroundTint="#FDC804"
             android:text="CREATE ACCOUNT"
             android:textColor="#090707"
@@ -172,17 +211,17 @@
             app:cornerRadius="12dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/passwordInputLayout" />
+            app:layout_constraintTop_toBottomOf="@+id/terms_checkbox" />
 
         <TextView
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="45dp"
+            android:layout_marginTop="24dp"
             android:text="Already have an account?"
-            android:textSize="16sp"
+            android:textColor="#757575"
+            android:textSize="15sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/createAccountButton" />
 
@@ -192,7 +231,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:text="Log in"
-            android:textSize="16sp"
+            android:textColor="#121212"
+            android:textSize="15sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -202,29 +242,17 @@
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="20dp"
             android:layout_marginBottom="16dp"
             android:text="Your UCF email is used only to verify enrollment."
-            android:textSize="14sp"
+            android:textColor="#9E9E9E"
+            android:textSize="13sp"
             android:textStyle="italic"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/login_textView"
             app:layout_constraintVertical_bias="1.0" />
-
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
-            android:text="Create your account"
-            android:textSize="34dp"
-            android:textStyle="bold"
-            app:layout_constraintTop_toBottomOf="@+id/appName_textView"
-            tools:layout_editor_absoluteX="1dp"
-            tools:text="Create your account" />
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

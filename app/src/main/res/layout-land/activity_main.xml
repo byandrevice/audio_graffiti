@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/campus_background"
+    android:baselineAligned="false"
+    android:orientation="horizontal"
+    android:padding="16dp"
+    tools:context=".CampusMapActivity">
+
+    <!-- Left Column: Header Info & Action -->
+    <LinearLayout
+        android:id="@+id/campus_header"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:layout_marginEnd="16dp"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/campus_brand"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/campus_brand"
+            android:textColor="@color/campus_foreground"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/campus_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:accessibilityHeading="true"
+            android:text="@string/campus_title"
+            android:textColor="@color/campus_foreground"
+            android:textSize="26sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/campus_subtitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="@string/campus_subtitle"
+            android:textColor="@color/campus_muted"
+            android:textSize="14sp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/campus_record"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:minHeight="48dp"
+            android:backgroundTint="@color/campus_primary"
+            android:text="@string/campus_record"
+            android:textColor="@color/campus_foreground"
+            android:textStyle="bold"
+            app:cornerRadius="@dimen/campus_control_radius"
+            app:icon="@drawable/ic_campus_mic"
+            app:iconGravity="textStart"
+            app:iconTint="@color/campus_foreground" />
+
+    </LinearLayout>
+
+    <!-- Right Column: Campus Map Panel -->
+    <com.scanner.audio_graffiti.ui.CampusMapPanel
+        android:id="@+id/campus_map"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1.4" />
+
+</LinearLayout>

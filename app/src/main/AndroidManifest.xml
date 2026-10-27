@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
     <application
@@ -13,16 +14,57 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AudioGraffiti"
         tools:targetApi="31">
-        <activity android:name=".CampusMapActivity" android:exported="false" />
+
+        <!-- App Entry Launcher -->
         <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- Auth Screens -->
+        <activity
+            android:name=".LoginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".RegisterActivity"
+            android:exported="false" />
+
+        <!-- Main Campus Map Screen -->
+        <activity
+            android:name=".CampusMapActivity"
+            android:exported="false" />
+
+        <!-- Report User Screen -->
+        <activity
+            android:name=".ReportUserActivity"
+            android:exported="false" />
+
+        <!-- Main Settings Screen -->
+        <activity
+            android:name=".SettingsActivity"
+            android:exported="false" />
+
+        <!-- Settings Sub-Pages -->
+        <activity
+            android:name=".settings.SettingAccountActivity"
+            android:exported="false" />
+        <activity
+            android:name=".settings.SettingLocationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".settings.SettingNotificationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".settings.SettingPrivacyActivity"
+            android:exported="false" />
+        <activity
+            android:name=".settings.SettingHelpActivity"
+            android:exported="false" />
+
     </application>
 
 </manifest>

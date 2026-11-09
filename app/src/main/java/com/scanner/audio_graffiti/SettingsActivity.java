@@ -10,11 +10,12 @@ import com.scanner.audio_graffiti.settings.SettingAccountActivity;
 import com.scanner.audio_graffiti.settings.SettingHelpActivity;
 import com.scanner.audio_graffiti.settings.SettingLocationActivity;
 import com.scanner.audio_graffiti.settings.SettingNotificationActivity;
+import com.scanner.audio_graffiti.settings.SettingPersonalizationActivity;
 import com.scanner.audio_graffiti.settings.SettingPrivacyActivity;
 
 /**
  * Handles the Main Settings Hub Screen (setting_page.xml).
- * Connects user navigation to all 5 sub-settings pages, profile edit, and Logout.
+ * Connects user navigation to Account, Personalization, Location, Notifications, Privacy, and Help.
  */
 public class SettingsActivity extends AppCompatActivity {
 
@@ -23,18 +24,18 @@ public class SettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.setting_page);
 
-        // Edit Profile Button -> Opens Account Settings page
+        // Edit Profile Button -> Opens Account Settings page (setting_account_page.xml)
         View editProfileButton = findViewById(R.id.editProfile_button);
         if (editProfileButton != null) {
             editProfileButton.setOnClickListener(v -> 
                 startActivity(new Intent(SettingsActivity.this, SettingAccountActivity.class)));
         }
 
-        // 1. Account Option
-        View optionAccount = findViewById(R.id.option_account);
-        if (optionAccount != null) {
-            optionAccount.setOnClickListener(v -> 
-                startActivity(new Intent(SettingsActivity.this, SettingAccountActivity.class)));
+        // 1. Personalization Option (setting_personalization.xml)
+        View optionPersonalization = findViewById(R.id.option_personalization);
+        if (optionPersonalization != null) {
+            optionPersonalization.setOnClickListener(v -> 
+                startActivity(new Intent(SettingsActivity.this, SettingPersonalizationActivity.class)));
         }
 
         // 2. Location Settings Option

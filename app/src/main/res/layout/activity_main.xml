@@ -27,14 +27,14 @@
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
-            <!-- App Logo -->
+            <!-- App Logo (Transparent No-Background Logo) -->
             <ImageView
                 android:id="@+id/app_logo_imageView"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_marginEnd="10dp"
                 android:contentDescription="App Logo"
-                android:src="@drawable/app_logo" />
+                android:src="@drawable/logo_no_background" />
 
             <TextView
                 android:id="@+id/campus_brand"

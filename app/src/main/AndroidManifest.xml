@@ -8,9 +8,9 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@drawable/app_logo"
+        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@drawable/app_logo"
+        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AudioGraffiti"
         tools:targetApi="31">
@@ -51,6 +51,9 @@
         <!-- Settings Sub-Pages -->
         <activity
             android:name=".settings.SettingAccountActivity"
+            android:exported="false" />
+        <activity
+            android:name=".settings.SettingPersonalizationActivity"
             android:exported="false" />
         <activity
             android:name=".settings.SettingLocationActivity"

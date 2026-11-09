@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FAFAFC"
+    android:background="#FFFFFF"
     android:fillViewport="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -33,227 +33,233 @@
                 app:tint="#121212" />
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- Screen Title -->
+        <!-- Title -->
         <TextView
             android:id="@+id/screen_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="32dp"
             android:text="Account"
             android:textColor="#121212"
-            android:textSize="28sp"
+            android:textSize="32sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/back_button_card" />
 
-        <!-- Section 1 Header: Profile & Security -->
+        <!-- Centered Avatar Container -->
+        <FrameLayout
+            android:id="@+id/avatar_container"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/screen_title">
+
+            <!-- Avatar Image with Yellow Ring -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                app:cardBackgroundColor="#FFFFFF"
+                app:cardCornerRadius="50dp"
+                app:cardElevation="0dp"
+                app:strokeColor="#FDC804"
+                app:strokeWidth="3dp">
+
+                <ImageView
+                    android:id="@+id/avatar_imageView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="20dp"
+                    android:src="@android:drawable/ic_menu_myplaces"
+                    app:tint="#121212" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Pencil Edit Badge -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/edit_avatar_badge"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="bottom|end"
+                app:cardBackgroundColor="#FDC804"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp"
+                app:strokeColor="#FFFFFF"
+                app:strokeWidth="2dp">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="6dp"
+                    android:src="@android:drawable/ic_menu_edit"
+                    app:tint="#121212" />
+            </com.google.android.material.card.MaterialCardView>
+        </FrameLayout>
+
+        <!-- Display Name -->
         <TextView
-            android:id="@+id/section_profile_header"
+            android:id="@+id/username_textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="28dp"
-            android:text="Profile &amp; Security"
-            android:textColor="#3B4870"
-            android:textSize="16sp"
+            android:layout_marginTop="24dp"
+            android:text="John Doe"
+            android:textColor="#121212"
+            android:textSize="30sp"
             android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/screen_title" />
+            app:layout_constraintTop_toBottomOf="@+id/avatar_container" />
 
+        <!-- User Email Subtitle -->
+        <TextView
+            android:id="@+id/email_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="johndoe@ucf.edu"
+            android:textColor="#757575"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/username_textView" />
+
+        <!-- Input Fields Container -->
         <LinearLayout
-            android:id="@+id/profile_cards_container"
+            android:id="@+id/input_fields_container"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="24dp"
             android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/section_profile_header">
+            app:layout_constraintTop_toBottomOf="@+id/email_textView">
 
-            <!-- Card 1: UCF Email -->
-            <com.google.android.material.card.MaterialCardView
+            <!-- Name Input Field -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/nameInputLayout"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                app:cardBackgroundColor="#F1F2F6"
-                app:cardCornerRadius="14dp"
-                app:cardElevation="0dp"
-                app:strokeWidth="0dp">
+                android:layout_marginBottom="12dp"
+                android:hint="Name"
+                app:boxCornerRadiusBottomEnd="14dp"
+                app:boxCornerRadiusBottomStart="14dp"
+                app:boxCornerRadiusTopEnd="14dp"
+                app:boxCornerRadiusTopStart="14dp"
+                app:boxStrokeColor="#FDC804"
+                app:startIconDrawable="@android:drawable/ic_menu_myplaces"
+                app:startIconTint="#121212">
 
-                <RelativeLayout
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/userName_edit"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="16dp">
+                    android:layout_height="52dp"
+                    android:inputType="textPersonName"
+                    android:text="John Doe"
+                    android:textColor="#121212"
+                    android:textSize="15sp" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="UCF Student Email"
-                            android:textColor="#121212"
-                            android:textSize="16sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="2dp"
-                            android:text="johndoe@ucf.edu • Verified"
-                            android:textColor="#757575"
-                            android:textSize="13sp" />
-                    </LinearLayout>
-                </RelativeLayout>
-            </com.google.android.material.card.MaterialCardView>
-
-            <!-- Card 2: Display Name & Avatar -->
-            <com.google.android.material.card.MaterialCardView
+            <!-- Email Input Field -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/emailInputLayout"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                app:cardBackgroundColor="#F1F2F6"
-                app:cardCornerRadius="14dp"
-                app:cardElevation="0dp"
-                app:strokeWidth="0dp">
+                android:hint="Email"
+                app:boxCornerRadiusBottomEnd="14dp"
+                app:boxCornerRadiusBottomStart="14dp"
+                app:boxCornerRadiusTopEnd="14dp"
+                app:boxCornerRadiusTopStart="14dp"
+                app:boxStrokeColor="#FDC804"
+                app:startIconDrawable="@android:drawable/ic_dialog_email"
+                app:startIconTint="#121212">
 
-                <RelativeLayout
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/email_edit"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="16dp">
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Edit Display Name &amp; Avatar"
-                            android:textColor="#121212"
-                            android:textSize="16sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="2dp"
-                            android:text="Change your username or campus avatar"
-                            android:textColor="#757575"
-                            android:textSize="13sp" />
-                    </LinearLayout>
-                </RelativeLayout>
-            </com.google.android.material.card.MaterialCardView>
-
-            <!-- Card 3: Password -->
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                app:cardBackgroundColor="#F1F2F6"
-                app:cardCornerRadius="14dp"
-                app:cardElevation="0dp"
-                app:strokeWidth="0dp">
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="16dp">
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Change Password"
-                            android:textColor="#121212"
-                            android:textSize="16sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="2dp"
-                            android:text="Update your security password"
-                            android:textColor="#757575"
-                            android:textSize="13sp" />
-                    </LinearLayout>
-                </RelativeLayout>
-            </com.google.android.material.card.MaterialCardView>
+                    android:layout_height="52dp"
+                    android:inputType="textEmailAddress"
+                    android:text="johndoe@ucf.edu"
+                    android:textColor="#121212"
+                    android:textSize="15sp" />
+            </com.google.android.material.textfield.TextInputLayout>
 
         </LinearLayout>
 
-        <!-- Section 2 Header: Account Actions -->
+        <!-- Delete Account Link -->
         <TextView
-            android:id="@+id/section_actions_header"
+            android:id="@+id/deleteAccount_textLink"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="Data &amp; Management"
-            android:textColor="#3B4870"
-            android:textSize="16sp"
+            android:layout_marginTop="12dp"
+            android:drawablePadding="6dp"
+            android:text="Delete Account"
+            android:textColor="#D32F2F"
+            android:textSize="14sp"
             android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/profile_cards_container" />
+            app:drawableStartCompat="@android:drawable/ic_delete"
+            app:drawableTint="#D32F2F"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/input_fields_container" />
 
+        <!-- Pill-Shaped Action Buttons Container -->
         <LinearLayout
-            android:id="@+id/actions_cards_container"
+            android:id="@+id/buttons_container"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="28dp"
             android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/section_actions_header">
+            app:layout_constraintTop_toBottomOf="@+id/deleteAccount_textLink"
+            app:layout_constraintVertical_bias="1.0">
 
-            <!-- Card 1: Delete Account -->
-            <com.google.android.material.card.MaterialCardView
+            <!-- 1. Update Button -->
+            <Button
+                android:id="@+id/update_button"
+                style="@style/Widget.Material3.Button.OutlinedButton"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                app:cardBackgroundColor="#FFEBEE"
-                app:cardCornerRadius="14dp"
-                app:cardElevation="0dp"
-                app:strokeColor="#FFCDD2"
-                app:strokeWidth="1dp">
+                android:layout_height="52dp"
+                android:layout_marginBottom="12dp"
+                android:backgroundTint="#F5F5F5"
+                android:text="Update"
+                android:textColor="#121212"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:cornerRadius="26dp"
+                app:icon="@android:drawable/checkbox_on_background"
+                app:iconGravity="textStart"
+                app:iconTint="#121212"
+                app:strokeColor="#FDC804"
+                app:strokeWidth="1.5dp" />
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="16dp">
+            <!-- 2. Edit Password Button -->
+            <Button
+                android:id="@+id/editPassword_button"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:layout_marginBottom="12dp"
+                android:backgroundTint="#FDC804"
+                android:text="Edit Password"
+                android:textColor="#121212"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:cornerRadius="26dp" />
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Delete Account"
-                            android:textColor="#D32F2F"
-                            android:textSize="16sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="2dp"
-                            android:text="Permanently remove your profile and all voice graffiti"
-                            android:textColor="#B71C1C"
-                            android:textSize="13sp" />
-                    </LinearLayout>
-                </RelativeLayout>
-            </com.google.android.material.card.MaterialCardView>
+            <!-- 3. Log Out Button -->
+            <Button
+                android:id="@+id/logout_button_account"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:layout_marginBottom="16dp"
+                android:backgroundTint="#FDC804"
+                android:text="Log Out"
+                android:textColor="#121212"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:cornerRadius="26dp" />
 
         </LinearLayout>
 

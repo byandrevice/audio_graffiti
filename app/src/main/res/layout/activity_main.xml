@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
@@ -11,64 +10,119 @@
     android:paddingEnd="@dimen/campus_gutter"
     tools:context=".CampusMapActivity">
 
+    <!-- Top Bar: Logo, Brand Title, and Settings Button -->
+    <RelativeLayout
+        android:id="@+id/top_bar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <!-- App Logo -->
+            <ImageView
+                android:id="@+id/app_logo_imageView"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginEnd="10dp"
+                android:contentDescription="App Logo"
+                android:src="@drawable/app_logo" />
+
+            <TextView
+                android:id="@+id/campus_brand"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/campus_brand"
+                android:textColor="@color/campus_foreground"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <!-- Settings Access Button (Yellow Circle Profile Icon) -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/btn_settings"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            app:cardBackgroundColor="#FDC804"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="0dp"
+            app:strokeWidth="0dp">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="Settings"
+                android:padding="8dp"
+                android:src="@android:drawable/ic_menu_myplaces"
+                app:tint="#121212" />
+        </com.google.android.material.card.MaterialCardView>
+
+    </RelativeLayout>
+
+    <!-- Header Titles -->
     <LinearLayout
         android:id="@+id/campus_header"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="52dp"
+        android:layout_marginTop="16dp"
         android:orientation="vertical"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-        <TextView
-            android:id="@+id/campus_brand"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/campus_brand"
-            android:textColor="@color/campus_foreground"
-            android:textSize="14sp"
-            android:textStyle="bold" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/top_bar">
+
         <TextView
             android:id="@+id/campus_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
             android:accessibilityHeading="true"
             android:text="@string/campus_title"
             android:textColor="@color/campus_foreground"
-            android:textSize="34sp"
+            android:textSize="32sp"
             android:textStyle="bold" />
+
         <TextView
             android:id="@+id/campus_subtitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="4dp"
             android:text="@string/campus_subtitle"
             android:textColor="@color/campus_muted"
-            android:textSize="16sp" />
+            android:textSize="15sp" />
     </LinearLayout>
 
-    <!-- Local crop of UCF's official campus map; live maps/GPS can replace it later. -->
+    <!-- Campus Map Panel -->
     <com.scanner.audio_graffiti.ui.CampusMapPanel
         android:id="@+id/campus_map"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/campus_footer"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/campus_header"
-        app:layout_constraintBottom_toTopOf="@id/campus_footer" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/campus_header" />
 
+    <!-- Footer Action -->
     <LinearLayout
         android:id="@+id/campus_footer"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
         android:orientation="vertical"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintStart_toStartOf="parent">
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/campus_record"
             android:layout_width="match_parent"
@@ -83,4 +137,5 @@
             app:iconGravity="textStart"
             app:iconTint="@color/campus_foreground" />
     </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

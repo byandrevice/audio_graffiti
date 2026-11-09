@@ -1,5 +1,6 @@
 package com.scanner.audio_graffiti;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.Manifest;
 import android.content.pm.PackageManager;
@@ -38,6 +39,16 @@ public final class CampusMapActivity extends AppCompatActivity {
             return windowInsets;
         });
         ViewCompat.requestApplyInsets(root);
+
+        // Settings Button -> Opens Settings Activity
+        View settingsButton = findViewById(R.id.btn_settings);
+        if (settingsButton != null) {
+            settingsButton.setOnClickListener(v -> {
+                Intent intent = new Intent(CampusMapActivity.this, SettingsActivity.class);
+                startActivity(intent);
+            });
+        }
+
         CampusMapPanel map = findViewById(R.id.campus_map);
         map.setOnDropSelectedListener(number -> {
             showSheet(getString(R.string.campus_drop_label, number),

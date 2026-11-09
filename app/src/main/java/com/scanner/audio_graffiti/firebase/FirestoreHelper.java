@@ -15,6 +15,23 @@ public class FirestoreHelper {
         this.firestore = FirebaseFirestore.getInstance();
     }
 
+    // Save or update User in Firestore 'users' collection using UID
+    public void saveUserToFirestoreWithUid(String uid, User user) {
+        Map<String, Object> userData = new HashMap<>();
+        userData.put("uid", uid);
+        userData.put("user_name", user.getUserName());
+        userData.put("email", user.getEmail());
+        userData.put("is_banned", user.isBanned());
+        userData.put("is_annonymous", user.isAnonymous());
+        userData.put("create_at", user.getCreateAt());
+
+        String docId = (uid != null && !uid.isEmpty()) ? uid : String.valueOf(user.getUserId());
+
+        firestore.collection("users")
+                .document(docId)
+                .set(userData);
+    }
+
     // Save or update User in Firestore 'users' collection
     public void saveUserToFirestore(User user) {
         Map<String, Object> userData = new HashMap<>();

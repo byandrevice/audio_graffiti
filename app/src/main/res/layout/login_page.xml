@@ -138,7 +138,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
-            android:id="@+id/createAccountButton"
+            android:id="@+id/loginButton"
             android:layout_width="0dp"
             android:layout_height="52dp"
             android:layout_marginTop="24dp"
@@ -160,7 +160,7 @@
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/createAccountButton">
+            app:layout_constraintTop_toBottomOf="@+id/loginButton">
 
             <!-- Left Line -->
             <View

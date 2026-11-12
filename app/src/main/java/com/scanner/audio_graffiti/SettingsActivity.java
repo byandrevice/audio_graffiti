@@ -2,10 +2,15 @@ package com.scanner.audio_graffiti;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.scanner.audio_graffiti.firebase.FirestoreHelper;
 import com.scanner.audio_graffiti.settings.SettingAccountActivity;
 import com.scanner.audio_graffiti.settings.SettingHelpActivity;
 import com.scanner.audio_graffiti.settings.SettingLocationActivity;
@@ -19,10 +24,23 @@ import com.scanner.audio_graffiti.settings.SettingPrivacyActivity;
  */
 public class SettingsActivity extends AppCompatActivity {
 
+    private TextView usernameTextView;
+    private TextView emailTextView;
+    private FirebaseAuth mAuth;
+    private FirestoreHelper firestoreHelper;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.setting_page);
+
+        mAuth = FirebaseAuth.getInstance();
+        firestoreHelper = new FirestoreHelper();
+
+        usernameTextView = findViewById(R.id.username_textView);
+        emailTextView = findViewById(R.id.email_textView);
+
+        loadUserData();
 
         // Edit Profile Button -> Opens Account Settings page (setting_account_page.xml)
         View editProfileButton = findViewById(R.id.editProfile_button);
@@ -70,12 +88,51 @@ public class SettingsActivity extends AppCompatActivity {
         View logoutButton = findViewById(R.id.logout_button);
         if (logoutButton != null) {
             logoutButton.setOnClickListener(v -> {
+                mAuth.signOut();
                 Toast.makeText(SettingsActivity.this, "Logged out", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(SettingsActivity.this, LoginActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
                 finish();
             });
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        loadUserData();
+    }
+
+    private void loadUserData() {
+        FirebaseUser currentUser = mAuth != null ? mAuth.getCurrentUser() : null;
+        if (currentUser != null) {
+            String email = currentUser.getEmail() != null ? currentUser.getEmail() : "";
+            String displayName = currentUser.getDisplayName() != null ? currentUser.getDisplayName() : "User";
+
+            if (emailTextView != null && !TextUtils.isEmpty(email)) {
+                emailTextView.setText(email);
+            }
+            if (usernameTextView != null && !TextUtils.isEmpty(displayName) && !"User".equals(displayName)) {
+                usernameTextView.setText(displayName);
+            }
+
+            // Fetch latest user details from Cloud Firestore
+            if (firestoreHelper != null) {
+                firestoreHelper.getUserFromFirestore(currentUser.getUid(), documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        String firestoreName = documentSnapshot.getString("user_name");
+                        String firestoreEmail = documentSnapshot.getString("email");
+
+                        if (usernameTextView != null && !TextUtils.isEmpty(firestoreName)) {
+                            usernameTextView.setText(firestoreName);
+                        }
+                        if (emailTextView != null && !TextUtils.isEmpty(firestoreEmail)) {
+                            emailTextView.setText(firestoreEmail);
+                        }
+                    }
+                });
+            }
         }
     }
 }

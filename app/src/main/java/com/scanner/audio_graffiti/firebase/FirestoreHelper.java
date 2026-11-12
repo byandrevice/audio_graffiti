@@ -1,5 +1,7 @@
 package com.scanner.audio_graffiti.firebase;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.scanner.audio_graffiti.database.entity.User;
 import com.scanner.audio_graffiti.database.entity.VoiceMemo;
@@ -47,6 +49,28 @@ public class FirestoreHelper {
         firestore.collection("users")
                 .document(String.valueOf(user.getUserId()))
                 .set(userData);
+    }
+
+    // Fetch user document from Firestore 'users' collection
+    public void getUserFromFirestore(String uid, OnSuccessListener<DocumentSnapshot> listener) {
+        if (uid == null || uid.isEmpty()) return;
+        firestore.collection("users").document(uid).get().addOnSuccessListener(listener);
+    }
+
+    // Update user profile fields in Firestore
+    public void updateUserInFirestore(String uid, String userName, String email) {
+        if (uid == null || uid.isEmpty()) return;
+        Map<String, Object> updates = new HashMap<>();
+        updates.put("user_name", userName);
+        updates.put("email", email);
+
+        firestore.collection("users").document(uid).update(updates);
+    }
+
+    // Delete user from Firestore
+    public void deleteUserFromFirestore(String uid) {
+        if (uid == null || uid.isEmpty()) return;
+        firestore.collection("users").document(uid).delete();
     }
 
     // Save Voice Memo in Firestore 'voice_memos' collection

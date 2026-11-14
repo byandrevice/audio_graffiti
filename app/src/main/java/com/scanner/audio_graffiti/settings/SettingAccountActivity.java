@@ -20,6 +20,7 @@ import com.google.firebase.auth.UserProfileChangeRequest;
 import com.scanner.audio_graffiti.LoginActivity;
 import com.scanner.audio_graffiti.R;
 import com.scanner.audio_graffiti.firebase.FirestoreHelper;
+import com.scanner.audio_graffiti.ui.ThemeUtils;
 
 /**
  * Handles Account Profile Screen (setting_account_page.xml).
@@ -40,6 +41,8 @@ public class SettingAccountActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.setting_account_page);
+
+        ThemeUtils.applyTheme(this);
 
         mAuth = FirebaseAuth.getInstance();
         firestoreHelper = new FirestoreHelper();
@@ -114,6 +117,12 @@ public class SettingAccountActivity extends AppCompatActivity {
         if (logoutButton != null) {
             logoutButton.setOnClickListener(v -> handleLogout());
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        ThemeUtils.applyTheme(this);
     }
 
     private void handleProfileUpdate() {

@@ -2,12 +2,14 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scroll_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FAFAFC"
     android:fillViewport="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/root_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="20dp">
@@ -28,6 +30,7 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:contentDescription="Back"
                 android:padding="10dp"
                 android:src="@android:drawable/ic_menu_revert"
                 app:tint="#121212" />
@@ -71,6 +74,7 @@
 
             <!-- Card 1: Color -->
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_color_theme"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
@@ -91,6 +95,7 @@
                         android:orientation="vertical">
 
                         <TextView
+                            android:id="@+id/text_label_color"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Color"
@@ -99,6 +104,7 @@
                             android:textStyle="bold" />
 
                         <TextView
+                            android:id="@+id/text_selected_color"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="2dp"
@@ -108,6 +114,7 @@
                     </LinearLayout>
 
                     <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/badge_color_swatch"
                         android:layout_width="32dp"
                         android:layout_height="32dp"
                         android:layout_alignParentEnd="true"
@@ -120,6 +127,7 @@
                         <ImageView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:contentDescription="Color Badge"
                             android:padding="6dp"
                             android:src="@android:drawable/ic_menu_edit"
                             app:tint="#121212" />
@@ -130,6 +138,7 @@
 
             <!-- Card 2: Dark mode -->
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_dark_mode"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
@@ -144,6 +153,7 @@
                     android:padding="16dp">
 
                     <TextView
+                        android:id="@+id/text_label_dark_mode"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
@@ -195,6 +205,7 @@
                             <ImageView
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
+                                android:contentDescription="Light Mode"
                                 android:padding="8dp"
                                 android:src="@android:drawable/ic_menu_day"
                                 app:tint="#121212" />
@@ -213,6 +224,7 @@
                             <ImageView
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
+                                android:contentDescription="Dark Mode"
                                 android:padding="8dp"
                                 android:src="@android:drawable/ic_menu_today"
                                 app:tint="#121212" />
@@ -225,6 +237,7 @@
 
             <!-- Card 3: Background -->
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_background_option"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
@@ -245,6 +258,7 @@
                         android:orientation="vertical">
 
                         <TextView
+                            android:id="@+id/text_label_background"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Background"
@@ -253,6 +267,7 @@
                             android:textStyle="bold" />
 
                         <TextView
+                            android:id="@+id/text_selected_bg"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="2dp"
@@ -266,6 +281,7 @@
                         android:layout_height="20dp"
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
+                        android:contentDescription="Arrow"
                         android:src="@android:drawable/ic_media_play"
                         app:tint="#757575" />
                 </RelativeLayout>
@@ -273,6 +289,7 @@
 
             <!-- Card 4: Adaptive colors -->
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_adaptive"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
@@ -294,6 +311,7 @@
                         android:orientation="vertical">
 
                         <TextView
+                            android:id="@+id/text_label_adaptive"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Adaptive colors"
@@ -302,6 +320,7 @@
                             android:textStyle="bold" />
 
                         <TextView
+                            android:id="@+id/text_sub_adaptive"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="2dp"
@@ -349,6 +368,7 @@
 
             <!-- Card 1: AMOLED mode -->
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_amoled"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
@@ -370,6 +390,7 @@
                         android:orientation="vertical">
 
                         <TextView
+                            android:id="@+id/text_label_amoled"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="AMOLED mode"
@@ -378,6 +399,7 @@
                             android:textStyle="bold" />
 
                         <TextView
+                            android:id="@+id/text_sub_amoled"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="2dp"
@@ -400,6 +422,7 @@
 
             <!-- Card 2: E-Ink mode -->
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_eink"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
@@ -421,6 +444,7 @@
                         android:orientation="vertical">
 
                         <TextView
+                            android:id="@+id/text_label_eink"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="E-Ink mode"
@@ -429,6 +453,7 @@
                             android:textStyle="bold" />
 
                         <TextView
+                            android:id="@+id/text_sub_eink"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="2dp"
@@ -451,6 +476,7 @@
 
             <!-- Card 3: Liquid Glass effect -->
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_glass"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
@@ -472,6 +498,7 @@
                         android:orientation="vertical">
 
                         <TextView
+                            android:id="@+id/text_label_glass"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Liquid Glass effect"
@@ -480,6 +507,7 @@
                             android:textStyle="bold" />
 
                         <TextView
+                            android:id="@+id/text_sub_glass"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="2dp"
@@ -527,6 +555,7 @@
 
             <!-- Card 1: Font and size -->
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_font_size"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
@@ -540,20 +569,37 @@
                     android:layout_height="wrap_content"
                     android:padding="16dp">
 
-                    <TextView
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:text="Font and size"
-                        android:textColor="#121212"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/text_label_font"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Font and size"
+                            android:textColor="#121212"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/text_selected_font"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:text="Default (100%)"
+                            android:textColor="#757575"
+                            android:textSize="13sp" />
+                    </LinearLayout>
 
                     <ImageView
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
+                        android:contentDescription="Arrow"
                         android:src="@android:drawable/ic_media_play"
                         app:tint="#757575" />
                 </RelativeLayout>

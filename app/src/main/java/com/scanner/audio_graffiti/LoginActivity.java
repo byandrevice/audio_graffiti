@@ -10,6 +10,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.scanner.audio_graffiti.ui.ThemeUtils;
 
 /**
  * Handles the Login Screen (login_page.xml).
@@ -25,6 +26,8 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_page);
+
+        ThemeUtils.applyTheme(this);
 
         mAuth = FirebaseAuth.getInstance();
         emailInput = findViewById(R.id.mail_hint);
@@ -90,5 +93,11 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(intent);
             });
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        ThemeUtils.applyTheme(this);
     }
 }

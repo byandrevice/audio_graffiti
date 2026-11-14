@@ -15,6 +15,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.scanner.audio_graffiti.database.entity.User;
 import com.scanner.audio_graffiti.firebase.FirestoreHelper;
+import com.scanner.audio_graffiti.ui.ThemeUtils;
 
 /**
  * Handles the Registration Screen (register_page.xml).
@@ -34,6 +35,8 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.register_page);
+
+        ThemeUtils.applyTheme(this);
 
         mAuth = FirebaseAuth.getInstance();
         emailInput = findViewById(R.id.mail_hint);
@@ -145,5 +148,11 @@ public class RegisterActivity extends AppCompatActivity {
                 finish();
             });
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        ThemeUtils.applyTheme(this);
     }
 }

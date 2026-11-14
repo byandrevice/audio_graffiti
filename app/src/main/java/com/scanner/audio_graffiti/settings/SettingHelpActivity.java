@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 import com.scanner.audio_graffiti.R;
+import com.scanner.audio_graffiti.ui.ThemeUtils;
 
 /**
  * Handles Help & Feedback Sub-Settings Screen (setting_help_page.xml).
@@ -15,10 +16,18 @@ public class SettingHelpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.setting_help_page);
 
+        ThemeUtils.applyTheme(this);
+
         // Circular Back Button -> Returns to Settings main screen
         View backButton = findViewById(R.id.back_button_card);
         if (backButton != null) {
             backButton.setOnClickListener(v -> finish());
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        ThemeUtils.applyTheme(this);
     }
 }

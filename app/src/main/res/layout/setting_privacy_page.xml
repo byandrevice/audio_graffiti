@@ -28,6 +28,7 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:contentDescription="Back"
                 android:padding="10dp"
                 android:src="@android:drawable/ic_menu_revert"
                 app:tint="#121212" />
@@ -198,6 +199,7 @@
 
             <!-- Card 1: Blocked Users -->
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_blocked_users"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"

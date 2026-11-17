@@ -19,18 +19,32 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.scanner.audio_graffiti.ui.CampusMapPanel;
 import com.scanner.audio_graffiti.ui.VoiceRecorderSheet;
 
-/** Local campus map and sample drop selections, with real microphone recording. */
+/** Local campus map and sample drop selections, with real microphone recording and location permissions. */
 public final class CampusMapActivity extends AppCompatActivity {
+
     private VoiceRecorderSheet recorderSheet;
-    private final ActivityResultLauncher<String> microphonePermission = registerForActivityResult(
-            new ActivityResultContracts.RequestPermission(), granted -> {
-                if (granted) startRecording();
-                else Toast.makeText(this, R.string.campus_microphone_permission, Toast.LENGTH_LONG).show();
+
+    // Combined Microphone & Location Permission Launcher on opening Campus Map
+    private final ActivityResultLauncher<String[]> appPermissionsLauncher = registerForActivityResult(
+            new ActivityResultContracts.RequestMultiplePermissions(), result -> {
+                Boolean micGranted = result.getOrDefault(Manifest.permission.RECORD_AUDIO, false);
+                Boolean locationGranted = result.getOrDefault(Manifest.permission.ACCESS_FINE_LOCATION, false);
+
+                if (Boolean.TRUE.equals(micGranted) && Boolean.TRUE.equals(locationGranted)) {
+                    Toast.makeText(this, "Microphone and Location permissions enabled!", Toast.LENGTH_SHORT).show();
+                } else if (Boolean.TRUE.equals(micGranted)) {
+                    Toast.makeText(this, "Microphone permission enabled.", Toast.LENGTH_SHORT).show();
+                } else if (Boolean.TRUE.equals(locationGranted)) {
+                    Toast.makeText(this, "Location permission enabled.", Toast.LENGTH_SHORT).show();
+                }
             });
-    @Override protected void onCreate(Bundle state) {
+
+    @Override
+    protected void onCreate(Bundle state) {
         super.onCreate(state);
         WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
         setContentView(R.layout.activity_main);
+
         View root = findViewById(R.id.main);
         int gutter = getResources().getDimensionPixelSize(R.dimen.campus_gutter);
         ViewCompat.setOnApplyWindowInsetsListener(root, (view, windowInsets) -> {
@@ -39,6 +53,9 @@ public final class CampusMapActivity extends AppCompatActivity {
             return windowInsets;
         });
         ViewCompat.requestApplyInsets(root);
+
+        // Prompt user for Microphone and Location permissions immediately upon entering Campus Map
+        checkAndRequestAppPermissions();
 
         // Settings Button -> Opens Settings Activity
         View settingsButton = findViewById(R.id.btn_settings);
@@ -55,24 +72,51 @@ public final class CampusMapActivity extends AppCompatActivity {
                     getString(R.string.campus_drop_description));
             Toast.makeText(this, R.string.campus_preview_audio_notice, Toast.LENGTH_SHORT).show();
         });
+
         findViewById(R.id.campus_record).setOnClickListener(view -> {
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED) startRecording();
-            else microphonePermission.launch(Manifest.permission.RECORD_AUDIO);
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED) {
+                startRecording();
+            } else {
+                appPermissionsLauncher.launch(new String[]{
+                    Manifest.permission.RECORD_AUDIO,
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                });
+            }
         });
+    }
+
+    private void checkAndRequestAppPermissions() {
+        boolean hasMic = ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED;
+        boolean hasLocation = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
+
+        if (!hasMic || !hasLocation) {
+            appPermissionsLauncher.launch(new String[]{
+                Manifest.permission.RECORD_AUDIO,
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            });
+        }
     }
 
     private void startRecording() {
         if (isFinishing() || (recorderSheet != null && recorderSheet.isShowing())) return;
         recorderSheet = new VoiceRecorderSheet(this);
-        recorderSheet.show(); recorderSheet.beginRecording();
+        recorderSheet.show();
+        recorderSheet.beginRecording();
     }
 
-    @Override protected void onStop() {
-        if (recorderSheet != null) { recorderSheet.stopCapture(); recorderSheet.pausePlayback(); }
+    @Override
+    protected void onStop() {
+        if (recorderSheet != null) {
+            recorderSheet.stopCapture();
+            recorderSheet.pausePlayback();
+        }
         super.onStop();
     }
 
-    @Override protected void onDestroy() {
+    @Override
+    protected void onDestroy() {
         if (recorderSheet != null) recorderSheet.dismiss();
         super.onDestroy();
     }

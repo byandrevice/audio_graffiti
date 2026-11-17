@@ -28,6 +28,7 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:contentDescription="Back"
                 android:padding="10dp"
                 android:src="@android:drawable/ic_menu_revert"
                 app:tint="#121212" />
@@ -70,9 +71,10 @@
                     android:id="@+id/avatar_imageView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:padding="20dp"
-                    android:src="@android:drawable/ic_menu_myplaces"
-                    app:tint="#121212" />
+                    android:contentDescription="Profile Avatar"
+                    android:padding="4dp"
+                    android:scaleType="centerCrop"
+                    android:src="@android:drawable/ic_menu_myplaces" />
             </com.google.android.material.card.MaterialCardView>
 
             <!-- Pencil Edit Badge -->
@@ -90,6 +92,7 @@
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:contentDescription="Edit Avatar"
                     android:padding="6dp"
                     android:src="@android:drawable/ic_menu_edit"
                     app:tint="#121212" />

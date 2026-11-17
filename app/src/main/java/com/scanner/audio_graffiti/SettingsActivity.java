@@ -3,14 +3,20 @@ package com.scanner.audio_graffiti;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import com.bumptech.glide.Glide;
 import com.google.android.material.card.MaterialCardView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -23,17 +29,35 @@ import com.scanner.audio_graffiti.settings.SettingNotificationActivity;
 import com.scanner.audio_graffiti.settings.SettingPersonalizationActivity;
 import com.scanner.audio_graffiti.settings.SettingPrivacyActivity;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+
 /**
  * Handles the Main Settings Hub Screen (setting_page.xml).
  * Connects user navigation to Account, Personalization, Location, Notifications, Privacy, and Help.
- * Applies user personalization themes dynamically.
+ * Allows avatar photo selection and internal storage saving.
  */
 public class SettingsActivity extends AppCompatActivity {
 
+    private static final String TAG = "SettingsActivity";
+    private static final String PROFILE_PREFS = "profile_prefs";
+    private static final String KEY_LOCAL_AVATAR = "saved_avatar_path";
+
     private TextView usernameTextView;
     private TextView emailTextView;
+    private ImageView avatarImageView;
+
     private FirebaseAuth mAuth;
     private FirestoreHelper firestoreHelper;
+
+    // Gallery Photo Picker Launcher for Avatar selection
+    private final ActivityResultLauncher<String> avatarPickerLauncher = registerForActivityResult(
+            new ActivityResultContracts.GetContent(), uri -> {
+                if (uri != null) {
+                    saveAvatarToInternalStorage(uri);
+                }
+            });
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,9 +69,20 @@ public class SettingsActivity extends AppCompatActivity {
 
         usernameTextView = findViewById(R.id.username_textView);
         emailTextView = findViewById(R.id.email_textView);
+        avatarImageView = findViewById(R.id.avatar_imageView);
 
         loadUserData();
         applyPersonalizationTheme();
+
+        // Avatar Image & Plus Badge Clicks -> Opens Photo Picker
+        View avatarContainer = findViewById(R.id.avatar_container);
+        View addAvatarBadge = findViewById(R.id.add_avatar_badge);
+
+        View.OnClickListener avatarClickListener = v -> avatarPickerLauncher.launch("image/*");
+
+        if (avatarContainer != null) avatarContainer.setOnClickListener(avatarClickListener);
+        if (addAvatarBadge != null) addAvatarBadge.setOnClickListener(avatarClickListener);
+        if (avatarImageView != null) avatarImageView.setOnClickListener(avatarClickListener);
 
         // Edit Profile Button -> Opens Account Settings page (setting_account_page.xml)
         View editProfileButton = findViewById(R.id.editProfile_button);
@@ -110,6 +145,43 @@ public class SettingsActivity extends AppCompatActivity {
         super.onResume();
         loadUserData();
         applyPersonalizationTheme();
+    }
+
+    private void saveAvatarToInternalStorage(Uri imageUri) {
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        String uid = currentUser != null ? currentUser.getUid() : "user";
+
+        try {
+            File avatarFile = new File(getFilesDir(), "user_avatar_" + uid + ".png");
+
+            InputStream inputStream = getContentResolver().openInputStream(imageUri);
+            if (inputStream != null) {
+                FileOutputStream fos = new FileOutputStream(avatarFile);
+                byte[] buffer = new byte[8192];
+                int bytesRead;
+                while ((bytesRead = inputStream.read(buffer)) != -1) {
+                    fos.write(buffer, 0, bytesRead);
+                }
+                fos.flush();
+                fos.close();
+                inputStream.close();
+
+                getSharedPreferences(PROFILE_PREFS, MODE_PRIVATE)
+                        .edit().putString(KEY_LOCAL_AVATAR, avatarFile.getAbsolutePath()).apply();
+
+                if (avatarImageView != null) {
+                    Glide.with(this)
+                            .load(avatarFile)
+                            .circleCrop()
+                            .into(avatarImageView);
+                }
+
+                Toast.makeText(this, "Avatar photo updated successfully!", Toast.LENGTH_SHORT).show();
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "Error saving avatar to internal storage", e);
+            Toast.makeText(this, "Failed to save avatar photo", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void applyPersonalizationTheme() {
@@ -205,6 +277,19 @@ public class SettingsActivity extends AppCompatActivity {
 
     private void loadUserData() {
         FirebaseUser currentUser = mAuth != null ? mAuth.getCurrentUser() : null;
+        SharedPreferences prefs = getSharedPreferences(PROFILE_PREFS, MODE_PRIVATE);
+        String localAvatarPath = prefs.getString(KEY_LOCAL_AVATAR, null);
+
+        if (!TextUtils.isEmpty(localAvatarPath) && avatarImageView != null) {
+            File avatarFile = new File(localAvatarPath);
+            if (avatarFile.exists()) {
+                Glide.with(this)
+                        .load(avatarFile)
+                        .circleCrop()
+                        .into(avatarImageView);
+            }
+        }
+
         if (currentUser != null) {
             String email = currentUser.getEmail() != null ? currentUser.getEmail() : "";
             String displayName = currentUser.getDisplayName() != null ? currentUser.getDisplayName() : "User";

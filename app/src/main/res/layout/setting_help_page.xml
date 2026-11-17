@@ -28,6 +28,7 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:contentDescription="Back"
                 android:padding="10dp"
                 android:src="@android:drawable/ic_menu_revert"
                 app:tint="#121212" />
@@ -71,6 +72,7 @@
 
             <!-- Card 1: Community Guidelines -->
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_guidelines"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
@@ -111,6 +113,7 @@
 
             <!-- Card 2: FAQ -->
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_faq"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
@@ -151,6 +154,7 @@
 
             <!-- Card 3: Contact Support -->
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_report_bug"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
@@ -216,6 +220,7 @@
 
             <!-- Card 1: Version -->
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_version_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"

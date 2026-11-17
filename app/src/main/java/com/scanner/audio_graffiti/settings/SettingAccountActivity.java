@@ -1,6 +1,8 @@
 package com.scanner.audio_graffiti.settings;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.InputType;
 import android.text.TextUtils;
@@ -8,12 +10,16 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
@@ -22,20 +28,36 @@ import com.scanner.audio_graffiti.R;
 import com.scanner.audio_graffiti.firebase.FirestoreHelper;
 import com.scanner.audio_graffiti.ui.ThemeUtils;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+
 /**
  * Handles Account Profile Screen (setting_account_page.xml).
- * Connects Firebase Auth & Cloud Firestore for profile updates, in-app password changes, account deletion, and log out.
+ * Connects Firebase Auth & Cloud Firestore for profile updates, internal file avatar selection, in-app password changes, account deletion, and log out.
  */
 public class SettingAccountActivity extends AppCompatActivity {
 
     private static final String TAG = "SettingAccountActivity";
+    private static final String PROFILE_PREFS = "profile_prefs";
+    private static final String KEY_LOCAL_AVATAR = "saved_avatar_path";
+
     private EditText userNameEdit;
     private EditText emailEdit;
     private TextView usernameTextView;
     private TextView emailTextView;
+    private ImageView avatarImageView;
 
     private FirebaseAuth mAuth;
     private FirestoreHelper firestoreHelper;
+
+    // Gallery / Photo Picker Launcher for Avatar selection
+    private final ActivityResultLauncher<String> avatarPickerLauncher = registerForActivityResult(
+            new ActivityResultContracts.GetContent(), uri -> {
+                if (uri != null) {
+                    saveAvatarToInternalStorage(uri);
+                }
+            });
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,35 +73,9 @@ public class SettingAccountActivity extends AppCompatActivity {
         emailEdit = findViewById(R.id.email_edit);
         usernameTextView = findViewById(R.id.username_textView);
         emailTextView = findViewById(R.id.email_textView);
+        avatarImageView = findViewById(R.id.avatar_imageView);
 
-        // Load Current Firebase User Details
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        if (currentUser != null) {
-            String email = currentUser.getEmail() != null ? currentUser.getEmail() : "";
-            String displayName = currentUser.getDisplayName() != null ? currentUser.getDisplayName() : "User";
-
-            if (emailEdit != null) emailEdit.setText(email);
-            if (emailTextView != null) emailTextView.setText(email);
-            if (userNameEdit != null) userNameEdit.setText(displayName);
-            if (usernameTextView != null) usernameTextView.setText(displayName);
-
-            // Fetch latest user details from Firestore
-            firestoreHelper.getUserFromFirestore(currentUser.getUid(), documentSnapshot -> {
-                if (documentSnapshot.exists()) {
-                    String firestoreName = documentSnapshot.getString("user_name");
-                    String firestoreEmail = documentSnapshot.getString("email");
-
-                    if (!TextUtils.isEmpty(firestoreName)) {
-                        if (userNameEdit != null) userNameEdit.setText(firestoreName);
-                        if (usernameTextView != null) usernameTextView.setText(firestoreName);
-                    }
-                    if (!TextUtils.isEmpty(firestoreEmail)) {
-                        if (emailEdit != null) emailEdit.setText(firestoreEmail);
-                        if (emailTextView != null) emailTextView.setText(firestoreEmail);
-                    }
-                }
-            });
-        }
+        loadAccountData();
 
         // Circular Back Button -> Returns to Settings main screen
         View backButton = findViewById(R.id.back_button_card);
@@ -87,12 +83,15 @@ public class SettingAccountActivity extends AppCompatActivity {
             backButton.setOnClickListener(v -> finish());
         }
 
-        // Edit Avatar Badge -> Action prompt
+        // Edit Avatar Badge & Avatar Image Click -> Opens Photo Picker
         View editAvatarBadge = findViewById(R.id.edit_avatar_badge);
-        if (editAvatarBadge != null) {
-            editAvatarBadge.setOnClickListener(v -> 
-                Toast.makeText(SettingAccountActivity.this, "Avatar customization coming soon", Toast.LENGTH_SHORT).show());
-        }
+        View avatarContainer = findViewById(R.id.avatar_container);
+
+        View.OnClickListener avatarClickListener = v -> avatarPickerLauncher.launch("image/*");
+
+        if (editAvatarBadge != null) editAvatarBadge.setOnClickListener(avatarClickListener);
+        if (avatarContainer != null) avatarContainer.setOnClickListener(avatarClickListener);
+        if (avatarImageView != null) avatarImageView.setOnClickListener(avatarClickListener);
 
         // Delete Account Link -> Confirmation Dialog & Deletion
         TextView deleteAccountLink = findViewById(R.id.deleteAccount_textLink);
@@ -123,6 +122,90 @@ public class SettingAccountActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         ThemeUtils.applyTheme(this);
+        loadAccountData();
+    }
+
+    private void loadAccountData() {
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        SharedPreferences prefs = getSharedPreferences(PROFILE_PREFS, MODE_PRIVATE);
+        String localAvatarPath = prefs.getString(KEY_LOCAL_AVATAR, null);
+
+        // Load saved internal avatar file if available
+        if (!TextUtils.isEmpty(localAvatarPath) && avatarImageView != null) {
+            File avatarFile = new File(localAvatarPath);
+            if (avatarFile.exists()) {
+                Glide.with(this)
+                        .load(avatarFile)
+                        .circleCrop()
+                        .into(avatarImageView);
+            }
+        }
+
+        if (currentUser != null) {
+            String email = currentUser.getEmail() != null ? currentUser.getEmail() : "";
+            String displayName = currentUser.getDisplayName() != null ? currentUser.getDisplayName() : "User";
+
+            if (emailEdit != null) emailEdit.setText(email);
+            if (emailTextView != null) emailTextView.setText(email);
+            if (userNameEdit != null) userNameEdit.setText(displayName);
+            if (usernameTextView != null) usernameTextView.setText(displayName);
+
+            // Fetch latest user details from Firestore
+            firestoreHelper.getUserFromFirestore(currentUser.getUid(), documentSnapshot -> {
+                if (documentSnapshot.exists()) {
+                    String firestoreName = documentSnapshot.getString("user_name");
+                    String firestoreEmail = documentSnapshot.getString("email");
+
+                    if (!TextUtils.isEmpty(firestoreName)) {
+                        if (userNameEdit != null) userNameEdit.setText(firestoreName);
+                        if (usernameTextView != null) usernameTextView.setText(firestoreName);
+                    }
+                    if (!TextUtils.isEmpty(firestoreEmail)) {
+                        if (emailEdit != null) emailEdit.setText(firestoreEmail);
+                        if (emailTextView != null) emailTextView.setText(firestoreEmail);
+                    }
+                }
+            });
+        }
+    }
+
+    private void saveAvatarToInternalStorage(Uri imageUri) {
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        String uid = currentUser != null ? currentUser.getUid() : "user";
+
+        try {
+            File avatarFile = new File(getFilesDir(), "user_avatar_" + uid + ".png");
+
+            InputStream inputStream = getContentResolver().openInputStream(imageUri);
+            if (inputStream != null) {
+                FileOutputStream fos = new FileOutputStream(avatarFile);
+                byte[] buffer = new byte[8192];
+                int bytesRead;
+                while ((bytesRead = inputStream.read(buffer)) != -1) {
+                    fos.write(buffer, 0, bytesRead);
+                }
+                fos.flush();
+                fos.close();
+                inputStream.close();
+
+                // Save internal file path to SharedPreferences
+                getSharedPreferences(PROFILE_PREFS, MODE_PRIVATE)
+                        .edit().putString(KEY_LOCAL_AVATAR, avatarFile.getAbsolutePath()).apply();
+
+                // Load internal file directly into ImageView using Glide
+                if (avatarImageView != null) {
+                    Glide.with(this)
+                            .load(avatarFile)
+                            .circleCrop()
+                            .into(avatarImageView);
+                }
+
+                Toast.makeText(this, "Avatar photo updated successfully!", Toast.LENGTH_SHORT).show();
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "Error saving avatar to internal storage", e);
+            Toast.makeText(this, "Failed to save avatar photo", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void handleProfileUpdate() {

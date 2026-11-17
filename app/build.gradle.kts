@@ -45,6 +45,10 @@ dependencies {
     implementation(libs.firebase.auth)
     implementation(libs.firebase.storage)
 
+    // Image Loading
+    implementation(libs.glide)
+    annotationProcessor(libs.glide.compiler)
+
     // Room
     implementation(libs.room.runtime)
     annotationProcessor(libs.room.compiler)

@@ -1,5 +1,6 @@
 package com.scanner.audio_graffiti.firebase;
 
+import android.util.Log;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -11,6 +12,7 @@ import java.util.Map;
 
 public class FirestoreHelper {
 
+    private static final String TAG = "FirestoreHelper";
     private final FirebaseFirestore firestore;
 
     public FirestoreHelper() {
@@ -23,6 +25,7 @@ public class FirestoreHelper {
         userData.put("uid", uid);
         userData.put("user_name", user.getUserName());
         userData.put("email", user.getEmail());
+        userData.put("avatar_url", user.getAvatarUrl());
         userData.put("is_banned", user.isBanned());
         userData.put("is_annonymous", user.isAnonymous());
         userData.put("create_at", user.getCreateAt());
@@ -31,7 +34,8 @@ public class FirestoreHelper {
 
         firestore.collection("users")
                 .document(docId)
-                .set(userData);
+                .set(userData)
+                .addOnFailureListener(e -> Log.e(TAG, "saveUserToFirestoreWithUid error: " + e.getMessage()));
     }
 
     // Save or update User in Firestore 'users' collection
@@ -42,19 +46,23 @@ public class FirestoreHelper {
         userData.put("fname", user.getFname());
         userData.put("lname", user.getLname());
         userData.put("email", user.getEmail());
+        userData.put("avatar_url", user.getAvatarUrl());
         userData.put("is_banned", user.isBanned());
         userData.put("is_annonymous", user.isAnonymous());
         userData.put("create_at", user.getCreateAt());
 
         firestore.collection("users")
                 .document(String.valueOf(user.getUserId()))
-                .set(userData);
+                .set(userData)
+                .addOnFailureListener(e -> Log.e(TAG, "saveUserToFirestore error: " + e.getMessage()));
     }
 
     // Fetch user document from Firestore 'users' collection
     public void getUserFromFirestore(String uid, OnSuccessListener<DocumentSnapshot> listener) {
         if (uid == null || uid.isEmpty()) return;
-        firestore.collection("users").document(uid).get().addOnSuccessListener(listener);
+        firestore.collection("users").document(uid).get()
+                .addOnSuccessListener(listener)
+                .addOnFailureListener(e -> Log.e(TAG, "getUserFromFirestore error: " + e.getMessage()));
     }
 
     // Update user profile fields in Firestore
@@ -64,13 +72,25 @@ public class FirestoreHelper {
         updates.put("user_name", userName);
         updates.put("email", email);
 
-        firestore.collection("users").document(uid).update(updates);
+        firestore.collection("users").document(uid).update(updates)
+                .addOnFailureListener(e -> Log.e(TAG, "updateUserInFirestore error: " + e.getMessage()));
+    }
+
+    // Update user avatar URL in Firestore
+    public void updateAvatarUrlInFirestore(String uid, String avatarUrl) {
+        if (uid == null || uid.isEmpty()) return;
+        Map<String, Object> updates = new HashMap<>();
+        updates.put("avatar_url", avatarUrl);
+
+        firestore.collection("users").document(uid).update(updates)
+                .addOnFailureListener(e -> Log.e(TAG, "updateAvatarUrlInFirestore error: " + e.getMessage()));
     }
 
     // Delete user from Firestore
     public void deleteUserFromFirestore(String uid) {
         if (uid == null || uid.isEmpty()) return;
-        firestore.collection("users").document(uid).delete();
+        firestore.collection("users").document(uid).delete()
+                .addOnFailureListener(e -> Log.e(TAG, "deleteUserFromFirestore error: " + e.getMessage()));
     }
 
     // Save Voice Memo in Firestore 'voice_memos' collection
@@ -86,6 +106,7 @@ public class FirestoreHelper {
         memoData.put("create_at", memo.getCreateAt());
 
         firestore.collection("voice_memos")
-                .add(memoData);
+                .add(memoData)
+                .addOnFailureListener(e -> Log.e(TAG, "saveVoiceMemoToFirestore error: " + e.getMessage()));
     }
 }

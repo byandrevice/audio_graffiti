@@ -3,10 +3,138 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/campus_background"
+    android:background="#FFFFFF"
     android:orientation="vertical"
-    android:padding="24dp">
-    <TextView android:id="@+id/campus_sheet_title" android:layout_width="match_parent" android:layout_height="wrap_content" android:accessibilityHeading="true" android:textColor="@color/campus_foreground" android:textSize="24sp" android:textStyle="bold" />
-    <TextView android:id="@+id/campus_sheet_description" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="12dp" android:textColor="@color/campus_muted" android:textSize="16sp" />
-    <com.google.android.material.button.MaterialButton android:id="@+id/campus_sheet_close" android:layout_width="match_parent" android:layout_height="wrap_content" android:minHeight="52dp" android:layout_marginTop="24dp" android:text="@string/campus_close" android:textColor="@color/campus_foreground" android:backgroundTint="@color/campus_primary" app:cornerRadius="@dimen/campus_control_radius" />
+    android:padding="20dp">
+
+    <!-- Header: Voice Drop Teardrop Badge & Pin Title -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/pin_badge_card"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            app:cardBackgroundColor="#121212"
+            app:cardCornerRadius="22dp"
+            app:cardElevation="2dp"
+            app:strokeWidth="0dp">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="Voice Pin"
+                android:padding="10dp"
+                android:src="@drawable/ic_campus_voice_pin"
+                app:tint="#FDC804" />
+        </com.google.android.material.card.MaterialCardView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="14dp"
+            android:layout_toEndOf="@+id/pin_badge_card"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/campus_sheet_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:accessibilityHeading="true"
+                android:text="Message Title"
+                android:textColor="#121212"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/campus_sheet_description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="Length: 1:24 • Student Union"
+                android:textColor="#757575"
+                android:textSize="13sp" />
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <!-- Action Buttons Row -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal">
+
+        <!-- Play Audio Button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_play_drop"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginEnd="6dp"
+            android:layout_weight="1"
+            android:backgroundTint="#FDC804"
+            android:text="PLAY"
+            android:textColor="#121212"
+            android:textStyle="bold"
+            app:cornerRadius="12dp"
+            app:icon="@android:drawable/ic_media_play"
+            app:iconTint="#121212" />
+
+        <!-- Reply Button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_reply_drop"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="6dp"
+            android:layout_weight="1"
+            android:text="REPLY"
+            android:textColor="#121212"
+            android:textStyle="bold"
+            app:cornerRadius="12dp"
+            app:icon="@drawable/ic_campus_mic"
+            app:iconTint="#121212"
+            app:strokeColor="#FDC804"
+            app:strokeWidth="1.5dp" />
+
+    </LinearLayout>
+
+    <!-- Report & Close Row -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp">
+
+        <TextView
+            android:id="@+id/btn_report_drop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:drawablePadding="6dp"
+            android:text="Report Pin"
+            android:textColor="#D32F2F"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            app:drawableStartCompat="@android:drawable/ic_delete"
+            app:drawableTint="#D32F2F" />
+
+        <TextView
+            android:id="@+id/campus_sheet_close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:padding="6dp"
+            android:text="Back to map"
+            android:textColor="#121212"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
 </LinearLayout>

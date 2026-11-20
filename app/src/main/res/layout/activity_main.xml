@@ -8,11 +8,22 @@
     android:background="#FAFAFC"
     tools:context=".CampusMapActivity">
 
-    <!-- Campus Map Panel (Fullscreen) -->
+    <!-- MapLibre Live Vector Map View (Free 60fps UCF Campus Vector Map) -->
+    <org.maplibre.android.maps.MapView
+        android:id="@+id/maplibre_view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Fallback Custom UCF Campus Map Panel -->
     <com.scanner.audio_graffiti.ui.CampusMapPanel
         android:id="@+id/campus_map"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

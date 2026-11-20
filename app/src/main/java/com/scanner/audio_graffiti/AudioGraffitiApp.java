@@ -3,10 +3,11 @@ package com.scanner.audio_graffiti;
 import android.app.Application;
 import android.content.SharedPreferences;
 import androidx.appcompat.app.AppCompatDelegate;
+import org.maplibre.android.MapLibre;
 
 /**
  * Global Application class for Audio Graffiti.
- * Initializes default theme preferences and night mode state on startup.
+ * Initializes default theme preferences and MapLibre SDK on startup.
  */
 public class AudioGraffitiApp extends Application {
 
@@ -16,6 +17,9 @@ public class AudioGraffitiApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        // Initialize MapLibre Native SDK
+        MapLibre.getInstance(this);
 
         // Apply saved dark mode theme globally on startup
         SharedPreferences prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);

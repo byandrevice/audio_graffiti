@@ -45,6 +45,12 @@ dependencies {
     implementation(libs.firebase.auth)
     implementation(libs.firebase.storage)
 
+    // MapLibre Native SDK (Free 60fps Vector Maps)
+    implementation(libs.maplibre.android)
+
+    // Google Maps SDK
+    implementation(libs.play.services.maps)
+
     // Image Loading
     implementation(libs.glide)
     annotationProcessor(libs.glide.compiler)

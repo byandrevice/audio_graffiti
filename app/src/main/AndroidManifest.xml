@@ -19,6 +19,11 @@
         android:theme="@style/Theme.AudioGraffiti"
         tools:targetApi="31">
 
+        <!-- Google Maps API Key -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyDdpRvjuopKD3aq4vNXFDYTTl-wha8kbnE" />
+
         <!-- App Entry Launcher -->
         <activity
             android:name=".MainActivity"
